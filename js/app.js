@@ -1,5 +1,6 @@
 'use strict';
 
+//Global Variables
 let myContainer = document.querySelector('section');
 let myButton = document.querySelector('section + div');
 let ul = document.querySelector('ul');
@@ -14,10 +15,9 @@ let clickAllowed = 3;
 
 
 // CONSTRUCTOR
-
 function Product(name, fileExtension = 'jpg') {
   this.name = name;
-  this.src = `images/${this.name}.${fileExtension}`;
+  this.src = `img/${this.name}.${fileExtension}`;
   this.clicks = 0;
   this.views = 0;
 }
@@ -32,10 +32,13 @@ function renderProducts() {
   let product1 = getRandomProduct();
   let product2 = getRandomProduct();
   let product3 = getRandomProduct();
-  console.log(product1, product2);
-  while (product1 === product2) {
+  // console.log(product1, product2, product3);
+  while (product1 === product2 || product1 === product3) {
     product2 = getRandomProduct();
-    console.log(product1, product2);
+    product3 = getRandomProduct();
+    console.log(product1);
+    console.log(product2);
+    console.log(product3);
   }
 
   image1.src = allProducts[product1].src;
@@ -47,7 +50,7 @@ function renderProducts() {
   image3.src = allProducts[product3].src;
   image3.alt = allProducts[product3].name;
   allProducts[product2].views++;
-  console.log(allProducts);
+  // console.log(allProducts);
 }
 
 function handleProductClick(event) {
