@@ -10,36 +10,35 @@ body {
 }
 
 header {
-  border: 1px solid blue;
+  background-color:  lightcyan;
   display: grid;
-  justify-content: flex-start;
   align-items: center;
   grid-template-columns: 12% 80%;
 }
 
 main {
-  border: 1px solid; 
+  background-color: paleturquoise; 
   display: grid;
-  grid-template-columns: 49% 49%; 
+  grid-template-columns: 25% 75%; 
 }
 
 #mainContent {
-  border: 1px solid orange;
+  background-color:  lightgoldenrodyellow;
   display: grid;
   grid-template-rows: 45%;
 
 }
 #images {
-  border: 1px solid green;
+  background-color:  lightseagreen;
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  align-items: center;;
+  grid-column-start: 1;
 }
 
 #survey {
-  border: 1px solid gold;
+  background-color:  lightpink;
 }
 
 footer {
-  border: 1px solid purple
+  background-color:  lightgreen
 }
