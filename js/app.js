@@ -10,7 +10,7 @@ let image3 = document.querySelector('section img:nth-child(3)');
 
 let allProducts = [];
 let clicks = 0;
-let indexArray = [];
+// let indexArray = [];
 let clickAllowed = 3;
 
 
@@ -28,29 +28,29 @@ function getRandomProduct() {
 }
 
 function renderProducts() {
-  // let product1 = getRandomProduct();
-  // let product2 = getRandomProduct();
-  // let product3 = getRandomProduct();
-  // // console.log(product1, product2, product3);
-  // while (product1 === product2 || product1 === product3) {
-  //   product2 = getRandomProduct();
-  //   product3 = getRandomProduct();
-  //   console.log(product1);
-  //   console.log(product2);
-  //   console.log(product3);
-  // }
-
-  while (indexArray.length < 4) {
-    let ranNum = getRandomProduct();
-    if (!indexArray.includes(ranNum)) {
-      indexArray.push(ranNum);
-    }
+  let product1 = getRandomProduct();
+  let product2 = getRandomProduct();
+  let product3 = getRandomProduct();
+  // console.log(product1, product2, product3);
+  while (product1 === product2 || product1 === product3) {
+    product2 = getRandomProduct();
+    product3 = getRandomProduct();
+    console.log(product1);
+    console.log(product2);
+    console.log(product3);
   }
-  console.log(indexArray);
 
-  let product1 = indexArray.shift();
-  let product2 = indexArray.shift();
-  let product3 = indexArray.shift();
+  // while (indexArray.length < 4) {
+  //   let ranNum = getRandomProduct();
+  //   if (!indexArray.includes(ranNum)) {
+  //     indexArray.push(ranNum);
+  //   }
+  // }
+  // console.log(indexArray);
+
+  // let product1 = indexArray.shift();
+  // let product2 = indexArray.shift();
+  // let product3 = indexArray.shift();
 
   image1.src = allProducts[product1].src;
   image1.alt = allProducts[product1].name;
@@ -129,20 +129,20 @@ renderProducts();
 
 myContainer.addEventListener('click', handleProductClick);
 
-function renderChart() {
-  console.log(allProducts[0].name);
-  let goatNames = [];
-  let goatViews = [];
-  let goatClick = [];
-  for (let i = 0; i < allProducts.length; i++) {
-    goatNames.push(allProducts[i].name);
-    goatViews.push(allProducts[i].views);
-    goatClick.push(allProducts[i].push);
-  }
-  console.log(goatNames);
-  console.log(goatViews);
-  console.log(goatClick);
-}
+// function renderChart() {
+//   console.log(allProducts[0].name);
+//   let goatNames = [];
+//   let goatViews = [];
+//   let goatClick = [];
+//   for (let i = 0; i < allProducts.length; i++) {
+//     goatNames.push(allProducts[i].name);
+//     goatViews.push(allProducts[i].views);
+//     goatClick.push(allProducts[i].push);
+//   }
+//   console.log(goatNames);
+//   console.log(goatViews);
+//   console.log(goatClick);
+// }
 
 handleButtonClick();
-renderChart();
+// renderChart();
