@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 95%;
+  margin: 1rem auto;
+  display: grid;
+  grid-template-rows: 25% 50% 25%;
+}
+
+header {
+  border: 1px solid blue;
+  display: grid;
+  justify-content: flex-start;
+  align-items: center;
+  grid-template-columns: 12% 80%;
+}
+
+main {
+  border: 1px solid; 
+  display: grid;
+  grid-template-columns: 49% 49%; 
+}
+
+#mainContent {
+  border: 1px solid orange;
+  display: grid;
+  grid-template-rows: 45%;
+
+}
+#images {
+  border: 1px solid green;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  align-items: center;;
+}
+
+#survey {
+  border: 1px solid gold;
+}
+
+footer {
+  border: 1px solid purple
+}
