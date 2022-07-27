@@ -2,7 +2,7 @@
 
 //Global Variables
 let myContainer = document.getElementById('images');
-let myButton = document.getElementById('survey');
+// let myButton = document.getElementById('survey');
 let ul = document.querySelector('ul');
 let image1 = document.querySelector('section img:first-child');
 let image2 = document.querySelector('section img:nth-child(2)');
@@ -11,15 +11,15 @@ let image3 = document.querySelector('section img:nth-child(3)');
 let allProducts = [];
 let clicks = 0;
 let indexArray = [];
-let clickAllowed = 3;
+let clickAllowed = 5;
 
 
 // CONSTRUCTOR
 function Product(name, fileExtension = 'jpg') {
   this.name = name;
   this.src = `img/${this.name}.${fileExtension}`;
-  this.clicks = 0;
   this.views = 0;
+  this.clicks = 0;
 }
 
 // FUNCTIONS
@@ -40,7 +40,7 @@ function renderProducts() {
   //   console.log(product3);
   // }
 
-  while (indexArray.length < 4) {
+  while (indexArray.length < 6) {
     let ranNum = getRandomProduct();
     if (!indexArray.includes(ranNum)) {
       indexArray.push(ranNum);
@@ -80,28 +80,29 @@ function handleProductClick(event) {
   renderProducts();
 
   if (clicks === clickAllowed) {
-    myButton.className = 'clicks-allowed';
+    // myButton.className = 'clicks-allowed';
     myContainer.removeEventListener('click', handleProductClick);
-    myButton.addEventListener('click', handleButtonClick);
+    renderChart();
+    // myButton.addEventListener('click', handleButtonClick);
   }
 }
 
-function handleButtonClick() {
-  if (clicks === clickAllowed) {
-    renderResults();
-  }
-}
+// function handleButtonClick() {
+//   if (clicks === clickAllowed) {
+//     renderResults();
+//   }
+// }
 
-function renderResults() {
+// function renderResults() {
 
-  // for each  product in my array, generate a LI
-  // ex: name had X views and was clicked on X times
-  for (let i = 0; i < allProducts.length; i++) {
-    let li = document.createElement('li');
-    li.textContent = `${allProducts[i].name} had ${allProducts[i].views} views and was clicked on ${allProducts[i].clicks} times`;
-    ul.appendChild(li);
-  }
-}
+//   // for each  product in my array, generate a LI
+//   // ex: name had X views and was clicked on X times
+//   for (let i = 0; i < allProducts.length; i++) {
+//     let li = document.createElement('li');
+//     li.textContent = `${allProducts[i].name} had ${allProducts[i].views} views and was clicked on ${allProducts[i].clicks} times`;
+//     ul.appendChild(li);
+//   }
+// }
 
 let bag = new Product('bag');
 let banana = new Product('banana');
@@ -129,20 +130,113 @@ renderProducts();
 
 myContainer.addEventListener('click', handleProductClick);
 
+//chart.js
 function renderChart() {
   console.log(allProducts[0].name);
-  let goatNames = [];
-  let goatViews = [];
-  let goatClick = [];
+  let productNames = [];
+  let productViews = [];
+  let productClicks = [];
   for (let i = 0; i < allProducts.length; i++) {
-    goatNames.push(allProducts[i].name);
-    goatViews.push(allProducts[i].views);
-    goatClick.push(allProducts[i].push);
+    productNames.push(allProducts[i].name);
+    productViews.push(allProducts[i].views);
+    productClicks.push(allProducts[i].clicks);
   }
-  console.log(goatNames);
-  console.log(goatViews);
-  console.log(goatClick);
+  console.log(productNames);
+  console.log(productViews);
+  console.log(productClicks);
+
+
+  const data = {
+    labels: productNames,
+    datasets: [
+      {
+        label: 'Views',
+        data: productViews,
+        backgroundColor: [
+          '#EBE8AA'
+        ],
+        borderColor: [
+          '#F5590F'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: 'Clicks/Votes',
+        data: productClicks,
+        backgroundColor: [
+          '#61EB0E'
+        ],
+        borderColor: [
+          '#9C18DE',
+        ],
+        borderWidth: 1
+      }
+    ]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
 }
 
-handleButtonClick();
-renderChart();
+
+// testing different chart types
+//   const DATA_COUNT = 7;
+//   const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+
+//   const labels = productNames({ count: 15 });
+//   const data = {
+//     labels: productNames,
+//     datasets: [
+//       {
+//         label: 'Views',
+//         data: productViews(NUMBER_CFG),
+//         borderColor: productViews,
+//         CHART_COLORS.red
+//         backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+//         stack: 'combined',
+//         type: 'bar'
+//       },
+//       {
+//         label: 'Votes',
+//         data: productClicks(NUMBER_CFG),
+//         borderColor: Utils.CHART_COLORS.blue,
+//         backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+//         stack: 'combined'
+//       }
+//     ]
+//   };
+//   const config = {
+//     type: 'line',
+//     data: data,
+//     options: {
+//       plugins: {
+//         title: {
+//           display: true,
+//           text: 'Chart.js Stacked Line/Bar Chart'
+//         }
+//       },
+//       scales: {
+//         y: {
+//           stacked: true
+//         }
+//       }
+//     },
+//   };
+// }
+// const myChart = new Chart(
+//   document.getElementById('myChart'),
+//   config);
