@@ -2,8 +2,6 @@
 
 //Global Variables
 let myContainer = document.getElementById('images');
-// let myButton = document.getElementById('survey');
-// let ul = document.getElementById('surveyList');
 let image1 = document.querySelector('section img:first-child');
 let image2 = document.querySelector('section img:nth-child(2)');
 let image3 = document.querySelector('section img:nth-child(3)');
@@ -12,8 +10,6 @@ let allProducts = [];
 let clicks = 0;
 let indexArray = [];
 let clickAllowed = 5;
-// let duckProducts = [];
-
 
 // CONSTRUCTOR
 function Product(name, views = 0, clicks = 0, fileExtension = 'jpg') {
@@ -24,40 +20,21 @@ function Product(name, views = 0, clicks = 0, fileExtension = 'jpg') {
   this.fileExtension = fileExtension;
 }
 
-
-// //constructor
-// function Ducks(name, views, clicks) {
-//   this.name = name;
-//   this.views = views;
-//   this.clicks = clicks;
-// }
-
 // FUNCTIONS
 function getRandomProduct() {
   return Math.floor(Math.random() * allProducts.length);
 }
 
+//this function makes it possible to cycle through the array of products without showing repeats in the same slide.
 function renderProducts() {
-  // let product1 = getRandomProduct();
-  // let product2 = getRandomProduct();
-  // let product3 = getRandomProduct();
-  // // console.log(product1, product2, product3);
-  // while (product1 === product2 || product1 === product3) {
-  //   product2 = getRandomProduct();
-  //   product3 = getRandomProduct();
-  //   console.log(product1);
-  //   console.log(product2);
-  //   console.log(product3);
-  // }
-
   while (indexArray.length < 6) {
     let ranNum = getRandomProduct();
     if (!indexArray.includes(ranNum)) {
       indexArray.push(ranNum);
     }
   }
-  console.log(indexArray);
 
+  //this allows the products that have been shown to "shift" to the back of the array to possibly be shown again, rather than be excluded all together until refresh
   let product1 = indexArray.shift();
   let product2 = indexArray.shift();
   let product3 = indexArray.shift();
@@ -73,13 +50,15 @@ function renderProducts() {
   allProducts[product2].views++;
 }
 
+//this is the container click event telling the user to click an image if they accidentally click the background
 function handleProductClick(event) {
   if (event.target === myContainer) {
     alert('Please click on an image');
   }
+
+  //here the clicks are tallied
   clicks++;
   let clickedProduct = event.target.alt;
-  console.log(clickedProduct);
 
   for (let i = 0; i < allProducts.length; i++) {
     if (clickedProduct === allProducts[i].name) {
@@ -90,30 +69,12 @@ function handleProductClick(event) {
   }
   renderProducts();
 
+  //removes the click when all counter reaches max clicks
   if (clicks === clickAllowed) {
-    // myButton.className = 'clicks-allowed';
     myContainer.removeEventListener('click', handleProductClick);
     renderChart();
-    // myButton.addEventListener('click', handleButtonClick);
   }
 }
-
-// function handleButtonClick() {
-//   if (clicks === clickAllowed) {
-//     renderResults();
-//   }
-// }
-
-// function renderResults() {
-
-//   // for each  product in my array, generate a LI
-//   // ex: name had X views and was clicked on X times
-//   for (let i = 0; i < allProducts.length; i++) {
-//     let li = document.createElement('li');
-//     li.textContent = `${allProducts[i].name} had ${allProducts[i].views} views and was clicked on ${allProducts[i].clicks} times`;
-//     ul.appendChild(li);
-//   }
-// }
 
 let bag = new Product('bag');
 let banana = new Product('banana');
@@ -175,7 +136,7 @@ function renderChart() {
         label: 'Clicks/Votes',
         data: productClicks,
         backgroundColor: [
-          '#61EB0E'
+          '#FFA500'
         ],
         bducksColor: [
           '#9C18DE',
@@ -203,40 +164,18 @@ function renderChart() {
   );
 }
 
-
-// Ducks.prototype.renderADuck = function () { };
-
-//helper function
-function makeSurveyList(name, views, clicks, fileExtension = 'jpg') {
-  let duckObj = new Product(name, views, clicks, fileExtension);
-  allProducts.push(duckObj);
-  duckObj.renderADuck();
-}
-
-function collectProductData() {
-  let potentialVotes = localStorage.getItem('ducks');
-  if (potentialVotes) {
-    let parsedVotes = JSON.parse(potentialVotes);
-
-    for (let ducks of parsedVotes) {
-      //console.log(ducks);
-      let name = ducks.name;
-      let views = ducks.views;
-      let clicks = ducks.clicks;
-      let fileExtension = ducks.fileExtension;
-
-
-      makeSurveyList(name, views, clicks, fileExtension);
-      // console.log('makeSurveyList');
-    }
+//Loading and recalling stored local storage
+function loadVoterData() {
+  let voterData = localStorage.getItem('ducks');
+  if (voterData !== null) {
+    allProducts = JSON.parse(voterData);
   }
 }
 
-function storeData() {
-  // console.log(productVotes);
+function storeVoterData() {
   let stringifiedData = JSON.stringify(allProducts);
   localStorage.setItem('ducks', stringifiedData);
 }
 
-collectProductData();
-storeData();
+storeVoterData();
+loadVoterData();
